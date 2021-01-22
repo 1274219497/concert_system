@@ -1,0 +1,78 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<title>演唱会抢票系统</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="/static/image/x-icon" />
+    <link rel="stylesheet" href="/static/css/font.css">
+	<link rel="stylesheet" href="/static/css/xadmin.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+    <script src="/static/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/js/xadmin.js"></script>
+
+</head>
+<body>
+
+
+<form class="layui-form" action={% url 'getdata' token %}    name="getsomedata" method="post">
+
+         <div class="layui-form-item">
+    <div class="layui-input-block">
+      <input type="submit" class="layui-btn" lay-submit="" lay-filter="demo1" id="agree" value="2s后可进行跳转">
+    </div>
+  </div>
+</form>
+
+
+    <!-- 中部结束 -->
+    <!-- 底部开始 -->
+    <div class="footer">
+        <div class="copyright">使用django+Xadmin技术支持</div>
+    </div>
+    <!-- 底部结束 -->
+    <!-- 背景切换开始 -->
+    <div class="bg-changer">
+        <div class="swiper-container changer-list">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img class="item" src="/static/images/a.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/b.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/c.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/d.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/e.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/f.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/g.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/h.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/i.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/j.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/k.jpg" alt=""></div>
+                <div class="swiper-slide"><span class="reset">初始化</span></div>
+            </div>
+        </div>
+        <div class="bg-out"></div>
+        <div id="changer-set"><i class="iconfont">&#xe696;</i></div>
+    </div>
+    <!-- 背景切换结束 -->
+
+<script>
+    var secs=2;
+    $('#agree').addClass("layui-btn-disabled").attr("disabled",true);
+    for( var i=1;i<=secs;i++){
+        window.setTimeout("update("+i+")",i*1000)
+    }
+    function update(num) {
+        if(num==secs){
+            $('#agree').attr("value","点击跳转");
+            $('#agree').removeClass("layui-btn-disabled").attr("disabled",false);
+        }else{
+            $("#agree").attr("value",""+(2-num)+"s后可进行跳转");
+        }
+    }
+
+</script>
+
+</body>
+</html>

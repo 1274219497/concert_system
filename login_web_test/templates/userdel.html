@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<title>演唱会后台管理系统</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="/static/image/x-icon" />
+    <link rel="stylesheet" href="/static/css/font.css">
+	<link rel="stylesheet" href="/static/css/xadmin.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+    <script src="/static/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/js/xadmin.js"></script>
+
+</head>
+<body>
+    <!-- 顶部开始 -->
+
+    <div class="container">
+        <div class="logo"><a href="/index_teacher/?username={{ username }}&role={{ role }}">演唱会后台管理系统</a></div>
+        <div class="open-nav"><i class="iconfont">&#xe699;</i></div>
+        <ul class="layui-nav right" lay-filter="">
+          <li class="layui-nav-item">
+            <a id="usernameid" href="javascript:;">{{username}}</a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+              <dd><a href="/modifypasswordview/?username={{ username }}">修改密码</a></dd>
+              <dd><a href="/ret/?username={{ username }}">退出</a></dd>
+            </dl>
+          </li>
+          <li class="layui-nav-item">身份:{{ role }}</li>
+        </ul>
+    </div>
+    <!-- 顶部结束 -->
+    <!-- 中部开始 -->
+    <div class="wrapper">
+        <!-- 左侧菜单开始 -->
+        <div class="left-nav">
+          <div id="side-nav">
+            <ul id="nav">
+                <li class="list" current>
+                    <a href="/index_teacher/?username={{ username }}&role={{ role }}">
+                        <i class="iconfont">&#xe761;</i>
+                        欢迎页面
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe70b;</i>
+                        演唱会管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="/buildinglist/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                显示演唱会信息
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/buildingdel/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                删除演唱会安排
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/buildingadd/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                添加演唱会安排
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="list" >
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe6a3;</i>
+                        购票管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="/dorlist/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                查询门票
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/doradd/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                添加门票
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/dordel/?username={{ username }}&role={{ role }}" >
+                                <i class="iconfont">&#xe6a7;</i>
+                                删除门票
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="list" >
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe6a3;</i>
+                        用户管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu opened" >
+                        <li>
+                            <a href="/userlist/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                查询用户
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/useradd/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                添加用户
+                            </a>
+                        </li>
+                        <li class="current">
+                            <a href="/userdel/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                删除用户
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="list" >
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe6a3;</i>
+                        演唱会购票情况查询
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu" style="display:none">
+                        <li>
+                            <a href="/show/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                显示购票统计结果
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+            </ul>
+          </div>
+        </div>
+        <!-- 左侧菜单结束 -->
+        <!-- 右侧主体开始 -->
+        <div class="page-content">
+          <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <form class="layui-form xbs" action="{% url 'usersearch3'  username  role  %}" method="post">
+                <div class="layui-form-pane" style="text-align: center;">
+                  <div class="layui-form-item" style="display: inline-block;">
+
+                    <div class="layui-input-inline">
+                      <input type="text" name="keyword"  placeholder="请输入用户名关键字" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-input-inline" style="width:80px">
+                        <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+                    </div>
+                  </div>
+                </div>
+            </form>
+              {% if messages %}
+        <script>
+            {% for msg in messages %}
+                alert('{{ msg.message }}');
+            {% endfor %}
+        </script>
+    {% endif %}
+            <xblock>
+                <button class="layui-btn layui-btn-danger" onclick="deleteAll(this)">
+                <i class="layui-icon">&#xe640;</i>批量删除</button>
+                <span class="x-right" style="line-height:40px">共有数据：{{ datalen }} 条</span>
+            </xblock>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>
+
+                        </th>
+                       <th>
+                            ID
+                        </th>
+                        <th>
+                            用户名
+                        </th>
+                        <th>
+                            密码
+                        </th>
+                        <th>
+                            身份
+                        </th>
+
+                        <th>
+                            状态
+                        </th>
+                        <th>
+                            操作
+                        </th>
+                    </tr>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for user in userlist %}
+                    {% if user.username != username %}
+                    <tr>
+                        <td>
+                            <input type="checkbox"  name="" >
+                        </td>
+                        <td>
+                            {{ user.pk }}
+                        </td>
+                        <td>
+                            {{ user.username }}
+                        </td>
+                        <td >
+                            {% if user.role.rolename == '后台管理者' %}
+                                ******
+                           {% else %}
+                               {{ user.password }}
+                            {% endif %}
+                        </td>
+                        <td >
+                            {{ user.role.rolename }}
+                        </td>
+
+                        <td class="td-status">
+
+
+                                    <span class="layui-btn layui-btn-normal layui-btn-mini">
+                                        未登录
+                                    </span>
+
+
+                        </td>
+                        <td class="td-manage">
+                            <a title="删除" href="javascript:;" onclick="deleteObj(this)"
+                            style="text-decoration:none">
+                                <i class="layui-icon">&#xe640;</i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+            <!-- 右侧内容框架，更改从这里结束 -->
+          </div>
+        </div>
+        <!-- 右侧主体结束 -->
+    </div>
+    <!-- 中部结束 -->
+    <!-- 底部开始 -->
+    <div class="footer">
+        <div class="copyright">本后台系统使用Django技术框架+X-adminV1.1</div>
+    </div>
+    <!-- 底部结束 -->
+    <!-- 背景切换开始 -->
+    <div class="bg-changer">
+        <div class="swiper-container changer-list">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img class="item" src="/static/images/a.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/b.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/c.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/d.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/e.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/f.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/g.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/h.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/i.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/j.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/k.jpg" alt=""></div>
+                <div class="swiper-slide"><span class="reset">初始化</span></div>
+            </div>
+        </div>
+        <div class="bg-out"></div>
+        <div id="changer-set"><i class="iconfont">&#xe696;</i></div>
+    </div>
+    <!-- 背景切换结束 -->
+    <!-- 页面动态效果 -->
+    <script>
+
+        //批量删除
+             function deleteAll (obj) {
+                layer.confirm('确认要批量删除吗？',function(index){
+                    var username=$(usernameid).text();
+                    //捉到所有被选中的，发异步进行恢复
+                     var rows=$(obj).parents("xblock").siblings("table").find("tbody").find("tr");
+                var ids=[];
+                var total = rows.length;
+
+               for(var i=0;i<total;i++){
+                   var isChecked=$(rows[i]).find("td").eq(0).children("input[type='checkbox']");
+                   if(isChecked.prop('checked')){
+                        var daishanrole = $(rows[i]).find("td").eq(4).text();
+                        console.log(daishanrole)
+                    if ($.trim(daishanrole) == $.trim("后台管理者")) {
+                        break;
+                    }
+
+                   }
+               }
+               console.log(daishanrole);
+               if ($.trim(daishanrole) == $.trim("后台管理者")) {
+               layer.msg('删除失败!请检查当前用户权限或用户是否正处于登录状态', {icon: 1, time: 1000});
+               }
+               else{
+                    for(var i=0;i<total;i++){
+                   var isChecked=$(rows[i]).find("td").eq(0).children("input[type='checkbox']");
+                   if(isChecked.prop('checked')){
+                       $(rows[i]).remove();
+                       var id=$(rows[i]).find("td").eq(1).text();
+                        ids.push(id);
+                   }
+               }
+               var judge=0;
+                 $.ajax({
+                     async:false,
+                    url: "/userdeldelall/",
+                    type:'POST',
+                     dataType:"json",
+                    data:{'ids':JSON.stringify(ids),'username':username},
+                     traditional:true,
+                    success: function (arg) {
+                        if(arg==1){
+                            judge=1;
+                        }else{
+                            judge=0;
+                        }
+                    }
+                });
+                 if(judge==1)
+                    layer.msg('删除成功', {icon: 1});
+                 else
+                     layer.msg('删除失败!请检查当前用户权限或用户是否正处于登录状态', {icon: 1});
+                }
+                });
+             }
+
+
+            /*用户-彻底删除*/
+            function deleteObj(obj,id) {
+                layer.confirm('确认删除吗？', function (index) {
+                    //捉到所有被选中的，发异步进行恢复
+                    var id = $(obj).parents("tr").find("td").eq(1).text();
+                    var username = $(usernameid).text();
+                    var daishanrole = $(obj).parents("tr").find("td").eq(4).text();
+                    if ($.trim(daishanrole) == $.trim("后台管理者")) {
+                        console.log(daishanrole);
+                        layer.msg('删除失败!请检查当前用户权限或用户是否正处于登录状态', {icon: 1, time: 1000});
+                    } else {
+                        var judge = 0;
+                        $.ajax({
+                            async: false,
+                            url: "/userdeldel/",
+                            type: 'POST',
+                            data: {'id': id, 'username': username},
+                            success: function (arg) {
+                                if (arg == 1) {
+                                    judge = 1;
+                                } else {
+                                    judge = 0;
+                                }
+                            }
+                        });
+                        if (judge == 1) {
+                            $(obj).parents("tr").remove();
+                            layer.msg('已删除!', {icon: 1, time: 1000});
+                        } else {
+                            layer.msg('删除失败!请检查当前用户权限或用户是否正处于登录状态', {icon: 1, time: 1000});
+                        }
+
+                    }
+                });
+            }
+        </script>
+
+</body>
+</html>

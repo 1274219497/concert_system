@@ -1,0 +1,107 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>演唱会抢票系统</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="/static/image/x-icon" />
+    <link rel="stylesheet" href="/static/css/font.css">
+	<link rel="stylesheet" href="/static/css/xadmin.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+    <script src="/static/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/js/xadmin.js"></script>
+
+
+</head>
+<body>
+<div class="layui-form-item layui-form-pane">
+    <label class="layui-form-label">演唱会</label>
+    <div class="layui-input-block">
+      <input type="text" id="concert" name="concert" autocomplete="off" value={{ concert }} class="layui-input" readonly="true">
+    </div>
+    </div>
+<div class="layui-form-item layui-form-pane">
+    <label class="layui-form-label">VIP余票</label>
+    <div class="layui-input-block">
+      <input type="text" id="vipt" name="vipt" autocomplete="off" value={{ vipt }} class="layui-input" readonly="true">
+    </div>
+    </div>
+<div class="layui-form-item layui-form-pane">
+    <label class="layui-form-label">内场余票</label>
+    <div class="layui-input-block">
+      <input type="text" id="innt" name="innt" autocomplete="off" value={{ innt }} class="layui-input" readonly="true">
+    </div>
+    </div>
+<div class="layui-form-item layui-form-pane">
+    <label class="layui-form-label">看台余票</label>
+    <div class="layui-input-block">
+      <input type="text" id="outt" name="outt" autocomplete="off" value={{ outt }} class="layui-input" readonly="true">
+    </div>
+    </div>
+
+        <div class="layui-form-item">
+
+            <label for="level-kiss" class="layui-form-label">
+                <span class="x-red">*</span>购票人数
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="countnum" name="count" required=""  lay-verify="required"
+                autocomplete="off" class="layui-input">
+                <p id="tip"></p>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="L_repass" class="layui-form-label">
+            </label>
+            <button  class="layui-btn" lay-filter="save" lay-submit="" onclick="myFunction()">
+                下一步
+            </button>
+        </div>
+
+    {% if messages %}
+        <script>
+            {% for msg in messages %}
+                alert('{{ msg.message }}');
+            {% endfor %}
+        </script>
+    {% endif %}
+<script>
+function myFunction() {
+    var x,text,con;
+    var v,i,o;
+    //获取id="countnum"的值
+    x=document.getElementById("countnum").value;
+    con=document.getElementById("concert").value;
+    v=document.getElementById("vipt").value;
+    i=document.getElementById("innt").value;
+    o=document.getElementById("outt").value;
+    console.log(con)
+    console.log(v)
+    console.log(x)
+    console.log(i)
+    console.log(o)
+    //如果x的值不是数字且小于等于0或大于4，则提示错误
+    if(isNaN(x)||x<=0||x>4||parseInt(x)>parseInt(v)||parseInt(x)>parseInt(i)||parseInt(x)>parseInt(o)){
+        text="购票人数必须大于0小于4，且不得超过某种类型的余票数,请按照规范重新进行输入";
+    }else{
+        text="输入正确";
+        $.ajax({
+                         async:false,
+                    url: "/selectFirst/",
+                    type:'GET',
+                    data:{'conname':con,'count':x},
+            success: function (arg) {
+                            window.location.href = arg;
+                    }
+        });
+    }
+    document.getElementById("tip").innerHTML=text
+
+}
+</script>
+</body>
+
+</html>

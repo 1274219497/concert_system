@@ -1,0 +1,113 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<title>演唱会抢票系统</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="/static/image/x-icon" />
+    <link rel="stylesheet" href="/static/css/font.css">
+	<link rel="stylesheet" href="/static/css/xadmin.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+    <script src="/static/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/js/xadmin.js"></script>
+
+</head>
+<body>
+<div class="layui-form-item">
+<div>
+    <label class="layui-form-label">信息如下：
+    </label>
+    </div>
+</div>
+ {% if messages %}
+        <script>
+            {% for msg in messages %}
+                alert('{{ msg.message }}');
+            {% endfor %}
+        </script>
+    {% endif %}
+    <form class="layui-form  layui-form-pane" action="/selectDorindex/" method="post">
+
+{% for concert in concerts %}
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+  <legend>{{concert.name}}</legend>
+</fieldset>
+
+  <div class="layui-form-item">
+
+    <div class="layui-input-block">
+      <input type="radio" name="concert" value={{ concert.pk }} title="请选择要购票的演唱会">
+</div>
+</div>
+       <div class="layui-form-item">
+    <label class="layui-form-label">剩余票数</label>
+    <div class="layui-input-block">
+      <input type="text" name="remain_seat{{ concert.pk }}" autocomplete="off" value={{ concert.remain_seat }} class="layui-input" readonly="true">
+    </div>
+    </div>
+
+       <div class="layui-form-item">
+    <label class="layui-form-label">嘉宾</label>
+           <div class="layui-input-block">
+    <input type="text" name="singer{{ concert.pk }}" autocomplete="off" value={{ concert.singer.name }} class="layui-input" readonly="true">
+           </div>
+    </div>
+
+      <div class="layui-form-item">
+    <label class="layui-form-label">地点</label>
+          <div class="layui-input-block">
+    <input type="text" name="site{{ concert.pk }}" autocomplete="off" value={{ concert.site }} class="layui-input" readonly="true">
+          </div>
+        </div>
+
+       </div>
+      <div class="layui-form-item">
+    <label class="layui-form-label">时间</label>
+          <div class="layui-input-block">
+    <input type="text" name="time{{ concert.pk }}" autocomplete="off" value={{ concert.time }} class="layui-input" readonly="true">
+          </div>
+          </div>
+
+
+
+
+{% endfor %}
+
+    <button class="layui-btn x-left" type="submit">进入购票界面</button>
+    </form>
+    <!-- 中部结束 -->
+    <!-- 底部开始 -->
+    <div class="footer">
+        <div class="copyright">使用django+Xadmin技术支持</div>
+    </div>
+    <!-- 底部结束 -->
+    <!-- 背景切换开始 -->
+    <div class="bg-changer">
+        <div class="swiper-container changer-list">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img class="item" src="/static/images/a.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/b.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/c.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/d.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/e.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/f.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/g.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/h.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/i.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/j.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/k.jpg" alt=""></div>
+                <div class="swiper-slide"><span class="reset">初始化</span></div>
+            </div>
+        </div>
+        <div class="bg-out"></div>
+        <div id="changer-set"><i class="iconfont">&#xe696;</i></div>
+    </div>
+    <!-- 背景切换结束 -->
+
+
+
+</body>
+</html>

@@ -1,0 +1,175 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<title>演唱会抢票系统</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="/static/image/x-icon" />
+    <link rel="stylesheet" href="/static/css/font.css">
+	<link rel="stylesheet" href="/static/css/xadmin.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+    <script src="/static/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/js/xadmin.js"></script>
+
+</head>
+<body>
+        <!-- 右侧主体开始 -->
+        <div class="page-content">
+          <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+          {% if messages %}
+        <script>
+            {% for msg in messages %}
+                alert('{{ msg.message }}');
+            {% endfor %}
+        </script>
+    {% endif %}
+
+            <form class="layui-form" action={% url 'selectDorAction' countlen concertname %} method="get" name="selectDor">
+<div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label">购票人数</label>
+      <label id="countid" class="layui-form-label">{{countlen}}</label>
+    </div>
+
+  </div>
+            <div class="layui-form-item">
+    <label class="layui-form-label">购票类型</label>
+    <div class="layui-input-inline">
+      <select name="tkname" >
+        {% for tk in tickets %}
+            <option value="{{ tk }}">{{ tk }}</option>
+            {% endfor %}
+      </select>
+    </div>
+  </div>
+{% for i in count %}
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+  <legend>购票人 {{ i }}</legend>
+</fieldset>
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label">姓名</label>
+      <div class="layui-input-inline">
+        <input type="text" name="stuname{{ i }}" lay-verify="required" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-inline">
+        {% if  i == 1 %}
+        <label class="layui-form-label">身份证号码</label>
+        {% else %}
+      <label class="layui-form-label">身份证号码</label>
+        {% endif %}
+      <div class="layui-input-inline">
+        <input type="number" name="stunum{{ i }}" lay-verify="required" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">单选框</label>
+    <div class="layui-input-block">
+      <input type="radio" name="gender{{ i }}" value="1" title="男" checked="">
+      <input type="radio" name="gender{{ i }}" value="0" title="女">
+    </div>
+  </div>
+{% endfor %}
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 25px;">
+  <legend>表单到此结束</legend>
+</fieldset>
+         <div class="layui-form-item">
+    <div class="layui-input-block">
+      <input type="submit" class="layui-btn" lay-submit="" lay-filter="demo1" id="agree" value="10s后可提交">
+        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+
+            <!-- 右侧内容框架，更改从这里结束 -->
+          </div>
+        </div>
+        <!-- 右侧主体结束 -->
+    </div>
+    <!-- 中部结束 -->
+    <!-- 底部开始 -->
+    <div class="footer">
+        <div class="copyright">使用django+Xadmin技术支持</div>
+    </div>
+    <!-- 底部结束 -->
+    <!-- 背景切换开始 -->
+    <div class="bg-changer">
+        <div class="swiper-container changer-list">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img class="item" src="/static/images/a.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/b.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/c.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/d.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/e.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/f.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/g.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/h.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/i.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/j.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/k.jpg" alt=""></div>
+                <div class="swiper-slide"><span class="reset">初始化</span></div>
+            </div>
+        </div>
+        <div class="bg-out"></div>
+        <div id="changer-set"><i class="iconfont">&#xe696;</i></div>
+    </div>
+    <!-- 背景切换结束 -->
+
+<script>
+    var secs=10;
+    $('#agree').addClass("layui-btn-disabled").attr("disabled",true);
+    for( var i=1;i<=secs;i++){
+        window.setTimeout("update("+i+")",i*1000)
+    }
+    function update(num) {
+        if(num==secs){
+            $('#agree').attr("value","提交");
+            $('#agree').removeClass("layui-btn-disabled").attr("disabled",false);
+        }else{
+            $("#agree").attr("value",""+(10-num)+"s后可提交");
+        }
+    }
+    function showTip() {
+        var count = $("#countid").text();
+        //console.log(count);
+        //console.log("111");
+        var flag=1;
+        if(count>2){
+            var str2=document.getElementById("intid2").value;
+            //console.log(str2);
+        for(var i=3;i<=count;i++){
+       var str3= document.getElementById("intid"+i).value;
+       //console.log(str3);
+            if(str2!=str3){
+                flag=0;break;
+            }
+            str2=str3;
+        }
+        if(flag==0){
+            for(var i=2;i<=count;i++)
+                document.getElementById("tip"+i).innerHTML = "邀请码不一致";
+        }else{
+            for(var i=2;i<=count;i++)
+                document.getElementById("tip"+i).innerHTML = "";
+        }
+
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>演唱会后台管理系统</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="/static/image/x-icon" />
+    <link rel="stylesheet" href="/static/css/font.css">
+	<link rel="stylesheet" href="/static/css/xadmin.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+    <script src="/static/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/js/xadmin.js"></script>
+
+</head>
+<body>
+    <!-- 顶部开始 -->
+    <div class="container">
+         {% if messages %}
+        <script>
+            {% for msg in messages %}
+                alert('{{ msg.message }}');
+            {% endfor %}
+        </script>
+    {% endif %}
+        <div class="logo"><a href="/index_teacher/?username={{ username }}&role={{ role }}">演唱会后台管理系统</a></div>
+        <div class="open-nav"><i class="iconfont">&#xe699;</i></div>
+        <ul class="layui-nav right" lay-filter="">
+          <li class="layui-nav-item">
+            <a href="javascript:;">{{ username }}</a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+              <dd><a href="/modifypasswordview/?username={{ username }}">修改密码</a></dd>
+              <dd><a href="/ret/?username={{ username }}">退出</a></dd>
+            </dl>
+          </li>
+          <li class="layui-nav-item">身份:{{ role }}</li>
+        </ul>
+    </div>
+    <!-- 顶部结束 -->
+    <!-- 中部开始 -->
+    <div class="wrapper">
+        <!-- 左侧菜单开始 -->
+        <div class="left-nav">
+          <div id="side-nav">
+            <ul id="nav">
+                <li class="list" current>
+                    <a href="/index_teacher/?username={{ username }}&role={{ role }}">
+                        <i class="iconfont">&#xe761;</i>
+                        欢迎页面
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe70b;</i>
+                        演唱会管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="/buildinglist/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                显示演唱会信息
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/buildingdel/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                删除演唱会安排
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/buildingadd/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                添加演唱会安排
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="list" >
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe6a3;</i>
+                        购票管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="/dorlist/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                查询门票
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/doradd/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                添加门票
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/dordel/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                删除门票
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="list" >
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe6a3;</i>
+                        用户管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu" style="display:none">
+                        <li>
+                            <a href="/userlist/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                查询用户
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/useradd/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                添加用户
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/userdel/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                删除用户
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="list" >
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe6a3;</i>
+                        演唱会购票情况查询
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu" style="display:none">
+                        <li>
+                            <a href="/show/?username={{ username }}&role={{ role }}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                显示购票统计结果
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+            </ul>
+          </div>
+        </div>
+        <!-- 左侧菜单结束 -->
+        <!-- 右侧主体开始 -->
+        <div class="page-content">
+          <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+
+            <blockquote class="layui-elem-quote">
+                欢迎使用演唱会后台管理系统
+            </blockquote>
+            <fieldset class="layui-elem-field layui-field-title site-title">
+              <legend><a name="default">信息统计</a></legend>
+            </fieldset>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>演唱会个数</th>
+                        <th>后台管理者</th>
+                        <th>歌手</th>
+                        <th>购票人</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>总计</td>>
+
+                        <td>{{ cn }}</td>
+                        <td>{{ tn }}</td>
+                        <td>{{ mn }}</td>
+                        <td>{{ sn }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th colspan="2" scope="col">服务器信息</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>服务器IP地址</td>
+                        <td>81.70.77.90</td>
+                    </tr>
+                    <tr>
+                        <td>服务器端口 </td>
+                        <td>8000</td>
+                    </tr>
+
+                    <tr>
+                        <td>服务器操作系统 </td>
+                        <td>CentOS 7.6 64位</td>
+                    </tr>
+                    <tr>
+                        <td>服务器的语言种类 </td>
+                        <td>Chinese (People's Republic of China)</td>
+                    </tr>
+                    <tr>
+                        <td>CPU 总数 </td>
+                        <td>1核</td>
+                    </tr>
+                    <tr>
+                        <td>CPU 类型 </td>
+                        <td>intel CORE i5 7th Gen</td>
+                    </tr>
+                    <tr>
+                        <td>内存 </td>
+                        <td>2 GB</td>
+                    </tr>
+                    <tr>
+                        <td>当前系统用户名 </td>
+                        <td>NETWORK SERVICE</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 右侧内容框架，更改从这里结束 -->
+          </div>
+        </div>
+        <!-- 右侧主体结束 -->
+    </div>
+    <!-- 中部结束 -->
+    <!-- 底部开始 -->
+    <div class="footer">
+        <div class="copyright">本后台系统使用Django技术框架+X-adminV1.1</div>
+    </div>
+    <!-- 底部结束 -->
+    <!-- 背景切换开始 -->
+	<div class="bg-changer">
+        <div class="swiper-container changer-list">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img class="item" src="/static/images/a.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/b.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/c.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/d.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/e.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/f.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/g.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/h.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/i.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/j.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="/static/images/k.jpg" alt=""></div>
+                <div class="swiper-slide"><span class="reset">初始化</span></div>
+            </div>
+        </div>
+        <div class="bg-out"></div>
+        <div id="changer-set"><i class="iconfont">&#xe696;</i></div>
+    </div>
+    <!-- 背景切换结束 -->
+
+</body>
+</html>
